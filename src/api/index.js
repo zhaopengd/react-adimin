@@ -2,16 +2,43 @@
 包含应用中 所有请求接口的函数 --->接口请求函数
       在此处封装  谁想发请求就引入 然后调用函数即可。
 */
-import qs from 'qs'
 import  ajax from './ajax'
 
 //const BASE = 'http://localhost:5000'
-
+const BASE=''
 //定义请求登陆--- post 请求方式
-// 调用时将实参数据 赋值 形参变量
+// 调用时将实参数据 赋值形参变量  简写方式 自动return  多行用 ()
+
+//返回的是一个promise对象
+export const reqLogin= (username,password)=>ajax.post(BASE+'/login',{username,password} )
+                                        //当做对象发送请求        对象简写方式                       
+//分别暴露的  引入方式 import {reqLogin} from '../../api'
+
+
+
+
+                                        
+
+
+  /*  //当做函数发送请求
+    ajax({ //配置对象  
+        method:'post',
+        url:BASE+'/login', 
+        data:{ 
+            username,
+            password
+        } 
+    }) */
+
+
+
+
+
+
+/* 
 export  function reqLogin(username,password) {
 //获取axios post请求返回结果 需要return，返回promise对象，调用函数之后才能  .then  .catch
-return ajax({ //配置对象  
+return ajax({ //配置对象 ！！！！！！ 
         method:'post',
         //url:'http://localhost:3000/login'
         url:'/login', //配置完代理  就不存在跨域问题了
@@ -22,7 +49,10 @@ return ajax({ //配置对象
        //  username=admin&password=admin 
        // data:qs.stringify({username,password})   // 不想用json格式  想要 形成 urlencoded 形式  地址栏  a:1&b:1形式
     })
-} 
+}  */
+
+
+
 /* 
 const n='admin'
 const p = 'admin'
@@ -32,7 +62,7 @@ reqLogin(n,p).then((res)=>{
     console.log(result,'请求成功了');   
 },(err)=>{console.log(err);
 })  */
-
+/* 
 //每次想要 获取数据都需要 .data  很烦 进一步改进  用响应拦截器 看ajax.js
 const n='admin'
 const p = 'admin2'
@@ -42,4 +72,4 @@ reqLogin(n,p).then((result)=>{
 
    // 将res 请求错误时  返回的promise对象为 pending状态 次回调就不会执行了
 },(err)=>{console.log(err.message); //应用响应拦截器，解决 。message
-}) 
+})  */

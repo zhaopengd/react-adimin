@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
-import { Form, Icon, Input, Button} from 'antd';
+import { Form, Icon, Input, Button,message} from 'antd';
 import logo from './images/logo.png'
 import './login.less'
-import {NavLink,Route,Switch,Redirect} from "react-router-dom";
+//引入接口请求函数  ---->发请求
+import {reqLogin} from '../../api'
+import {NavLink,Route,Switch,Redirect} from 'react-router-dom';
 const Item=Form.Item
  class Login extends Component {
 
@@ -22,10 +24,24 @@ const Item=Form.Item
         console.log(values,username,password); */
     
         //3.!!对表单所有的字段进行统一验证
-        this.props.form.validateFields((err, {username,password}) => {
+        this.props.form.validateFields( async (err, {username,password}) => {
             if (!err) {
-                alert(`发登陆的ajax请求，username=${username},password=${password}`)
-            }else{
+               // alert(`发登陆的ajax请求，username=${username},password=${password}`)
+          const result= await reqLogin(username,password)  //次函数返回的是promise对象
+          //不想用.then name我们就使用 async 和await  一旦使用await 就需要在最近的函数数前面加上 async  
+           
+          //登陆成功和失败
+          if (result.status===0) {
+ 
+           //跳转到admin 界面
+          // <Route path='/' component={Admin}/> 在render外部  无法实现 此方法跳转  所以使用 history
+          this.props.history.replace('/')   //登陆成功之后  就不让他回退了
+          message.success('欢迎来搞！！！')
+        } else {
+            message.error(result.msg)
+          }
+
+        }else{
                // alert('验证失败！')
             }
           });
