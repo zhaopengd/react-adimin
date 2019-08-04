@@ -29,10 +29,11 @@ axios.interceptors.request.use(function (config) {
   */
 // Add a response interceptor 添加响应的拦截器，在请求返回值后，且在我们指定的请求回调之前执行
 axios.interceptors.response.use(function (response) {
-  // Do something with response data  我们想用的数据就是response.data
+  // Do something with response data  我们想用的数据就是response.data   出处的是data 是axios下的配置配置对象中的data  只包含用户名和密码
  
   return response.data;//此返回结果就会交给我们指定的请求响应的回调 ---->index.js 中的请求回调
-
+  console.log(response.data);
+  
 }, function (error) {  //  统一处理所有请求异常错误，不用再去具体请求中处理
   /*  Do something with response error
   return Promise.reject(error);

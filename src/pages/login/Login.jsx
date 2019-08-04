@@ -5,6 +5,7 @@ import './login.less'
 //引入接口请求函数  ---->发请求
 import {reqLogin} from '../../api'
 import {NavLink,Route,Switch,Redirect} from 'react-router-dom';
+import { stringify } from 'querystring';
 const Item=Form.Item
  class Login extends Component {
 
@@ -31,10 +32,17 @@ const Item=Form.Item
           //不想用.then name我们就使用 async 和await  一旦使用await 就需要在最近的函数数前面加上 async    
           //登陆成功和失败
           if (result.status===0) {
-           //跳转到admin 界面
+        //将用户信息保存到localStorage中  //此处的data是 api文档中的data  包含用户的所有信息 
+        //获取用户信息
+        const user=result.data
+        //存储到localStorage中  存储在loaclStorage中的key自定义   值只能是文本字符串
+        //所以需要先将数据转化成 JSON格式  然后浏览器自动调用 tostring方法
+        localStorage.setItem('user_key',JSON.stringify(user))
+          
+          //跳转到admin 界面
           // <Route path='/' component={Admin}/> 在render外部  无法实现 此方法跳转  所以使用 history
           this.props.history.replace('/')   //登陆成功之后  就不让他回退了
-          message.success('欢迎来搞！！！')
+          message.success('欢迎来搞！！！')  
         } else {
             message.error(result.msg)
           }
@@ -69,6 +77,24 @@ const Item=Form.Item
     
 
     render() {
+ 
+     //如果用户访问登陆页面，如果信息存在 直接让她去admin页面
+     //读取保存的user，如果不存在，直接跳转到登陆界面  
+    const user = JSON.parse( localStorage.getItem('user_key')||'{}')
+    console.log(user);
+    if (user._id) {
+    //如果用户不存在 自动跳转到login界面     
+      //  this.props.history.replace('/login')  在render中不能这么跳转，此方法一般在时间回调函数里面做
+      return <Redirect to='/'/> //自动跳转到指定的路由路径
+   // return <Route path='/login' component={Login}/>   
+    }
+
+
+
+
+
+
+
         //拿到下面创建的form标签的 getFieldDecorator 函数  用于和表单进行双向绑定
         const {getFieldDecorator}=this.props.form
 
