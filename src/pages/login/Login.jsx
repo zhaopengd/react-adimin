@@ -28,11 +28,9 @@ const Item=Form.Item
             if (!err) {
                // alert(`发登陆的ajax请求，username=${username},password=${password}`)
           const result= await reqLogin(username,password)  //次函数返回的是promise对象
-          //不想用.then name我们就使用 async 和await  一旦使用await 就需要在最近的函数数前面加上 async  
-           
+          //不想用.then name我们就使用 async 和await  一旦使用await 就需要在最近的函数数前面加上 async    
           //登陆成功和失败
           if (result.status===0) {
- 
            //跳转到admin 界面
           // <Route path='/' component={Admin}/> 在render外部  无法实现 此方法跳转  所以使用 history
           this.props.history.replace('/')   //登陆成功之后  就不让他回退了
@@ -40,7 +38,6 @@ const Item=Form.Item
         } else {
             message.error(result.msg)
           }
-
         }else{
                // alert('验证失败！')
             }
