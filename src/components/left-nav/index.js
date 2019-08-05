@@ -9,6 +9,50 @@ const { SubMenu } = Menu;
 
 /* 左侧导航组件 */
 export default class LeftNav extends Component {
+
+/* 
+   方法二；依据reduce+递归实现
+*/
+getMenuNodes2=(menuList)=>{
+    
+    return menuList.reduce((pre,current)=>{
+        // 可能向 pre 中添加 <Menu.Item>
+        if (!item.children) {
+          pre.push(
+            <Menu.Item key={item.key}>  {/* key是唯一的 所以用路径就可以 */}
+            <Link to={item.key}>
+                <Icon type={item.icon}/>
+                <span>{item.title}</span>
+            </Link>
+            </Menu.Item>
+          )}
+          else{
+              pre.push(
+                <SubMenu
+                key={item.key}
+                title={
+                <span>
+                     <Icon type={item.icon} />
+                    <span>{item.title}</span>
+                </span>
+                 }
+                 >
+                 {
+                     this.getMenuNodes2(item.children)  //!!!此处是重点，  调用此方法生成children下的<Item></Item>
+                 }
+                </SubMenu>
+              )
+          }
+        return pre
+    }
+    ,[])
+}
+
+
+
+
+
+
     //根据只等的mennu数组生成标签数组，依据 map方法+函数递归
     getMenuNodes=(menuList)=>{
         return menuList.map(item=>{
