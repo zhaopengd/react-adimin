@@ -6,6 +6,14 @@ import storageutils from '../../utils/storageutils'
 import memoryUtils from '../../utils/memoryUtils';
 import LeftNav from '../../components/left-nav';
 import Header from '../../components/header';
+import Home from '../home/Home'
+import Category from '../category/Category'
+import Product from '../product/Product'
+import Role from '../role/Role'
+import User from '../user/User'
+import Bar from '../user/User'
+import Line from '../user/User'
+import Pie from '../user/User'
 
 const { Footer, Sider, Content } = Layout;
 export default class Admin extends Component {
@@ -28,7 +36,19 @@ export default class Admin extends Component {
             </Sider>
             <Layout>
                 <Header/>
-                <Content style={{background:'red'}}>Content</Content>
+                <Content style={{background:'red'}}>
+                    <Switch>
+                    <Route path='/home' component={Home}/>
+                    <Route path='/category' component={Category}/>
+                    <Route path='/product' component={Product}/>
+                    <Route path='/role' component={Role}/>
+                    <Route path='/user' component={User}/>
+                    <Route path='/charts/bar' component={Bar}/>
+                    <Route path='/charts/line' component={Line}/>
+                    <Route path='/charts/pie' component={Pie}/>
+                    <Redirect to='/home' />
+                    </Switch>
+                </Content>
                 <Footer style={{textAlign:'center',color:'rgba(0,0,0,0.1)'}}>
                 推荐使用谷歌浏览器，可以获得更加页面操作体验
                 </Footer>
