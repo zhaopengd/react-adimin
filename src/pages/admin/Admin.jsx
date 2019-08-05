@@ -9,9 +9,9 @@ export default class Admin extends Component {
     console.log(user);
     if (!user._id) {
     //如果用户不存在 自动跳转到login界面     
-      //  this.props.history.replace('/login')  在render中不能这么跳转，此方法一般在时间回调函数里面做
+    //  this.props.history.replace('/login')  在render中不能这么跳转，此方法一般在时间回调函数里面做
       return <Redirect to='/login'/> //自动跳转到指定的路由路径
-   // return <Route path='/login' component={Login}/>   
+    // return <Route path='/login' component={Login}/>   Redirect  重定向    也可以加一个From 从哪定到那里。
     }
         return (
             <div>
