@@ -8,8 +8,8 @@ import {BrowserRouter,HashRouter} from 'react-router-dom';
 import  './api'
 
 ReactDOM.render(
-<BrowserRouter>
+<HashRouter>
 <App/>
-</BrowserRouter>
+</HashRouter>
 ,document.getElementById('root'))
                   
