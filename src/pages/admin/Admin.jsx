@@ -1,9 +1,13 @@
 import React, { Component } from 'react'
 import {NavLink,Route,Switch,Redirect} from 'react-router-dom';
-import Login from '../login/Login'
+import { Layout } from 'antd';
 //import storageutils from '../../utils/storageutils'
 import storageutils from '../../utils/storageutils'
 import memoryUtils from '../../utils/memoryUtils';
+import LeftNav from '../../components/left-nav';
+import Header from '../../components/header';
+
+const { Footer, Sider, Content } = Layout;
 export default class Admin extends Component {
     render() {
     //如果用户访问登陆页面，如果信息存在 直接让她去admin页面
@@ -17,10 +21,19 @@ export default class Admin extends Component {
       return <Redirect to='/login'/> //自动跳转到指定的路由路径
     // return <Route path='/login' component={Login}/>   Redirect  重定向    也可以加一个From 从哪定到那里。
     }
-        return (
-            <div>
-                hello,{user.username}
-            </div>
+    return (
+        <Layout style={{height:'100%'}}>
+            <Sider>
+                <LeftNav/>
+            </Sider>
+            <Layout>
+                <Header/>
+                <Content style={{background:'red'}}>Content</Content>
+                <Footer style={{textAlign:'center',color:'rgba(0,0,0,0.1)'}}>
+                推荐使用谷歌浏览器，可以获得更加页面操作体验
+                </Footer>
+            </Layout>
+        </Layout>
         )
     }
 }
