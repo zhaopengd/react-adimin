@@ -32,4 +32,4 @@ export default {
     // localStorage.removeItem(USER_KEY)
     store.remove(USER_KEY)
   }
-}
+}       

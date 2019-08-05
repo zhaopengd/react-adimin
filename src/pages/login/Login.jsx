@@ -3,9 +3,11 @@ import { Form, Icon, Input, Button,message} from 'antd';
 import logo from './images/logo.png'
 import './login.less'
 import storageutils from '../../utils/storageutils'
+import meoryUtils from '../../utils/memoryUtils'
 //引入接口请求函数  ---->发请求
 import {reqLogin} from '../../api'
 import {NavLink,Route,Switch,Redirect} from 'react-router-dom';
+import memoryUtils from '../../utils/memoryUtils';
 const Item=Form.Item
  class Login extends Component {
 
@@ -26,7 +28,7 @@ const Item=Form.Item
     
         //3.!!对表单所有的字段进行统一验证
         this.props.form.validateFields( async (err, {username,password}) => {
-            if (!err) {
+          if (!err) {
                // alert(`发登陆的ajax请求，username=${username},password=${password}`)
           const result= await reqLogin(username,password)  //次函数返回的是promise对象
           //不想用.then name我们就使用 async 和await  一旦使用await 就需要在最近的函数数前面加上 async    
@@ -38,7 +40,10 @@ const Item=Form.Item
         //存储到localStorage中  存储在loaclStorage中的key自定义   值只能是文本字符串
         //所以需要先将数据转化成 JSON格式  然后浏览器自动调用 tostring方法
        // localStorage.setItem('user_key',JSON.stringify(user))
-       storageutils.saveUser(user)
+       storageutils.saveUser(user)   //在local中保存一份
+       //  在内存中在保存一份
+       memoryUtils.user=user
+
           //跳转到admin 界面
           // <Route path='/' component={Admin}/> 在render外部  无法实现 此方法跳转  所以使用 history
           this.props.history.replace('/')   //登陆成功之后  就不让他回退了
@@ -71,8 +76,6 @@ const Item=Form.Item
       }else{
           callback()   //验证通过   不传东西就是验证通过
       }
-          
-      
     }
     
 
@@ -81,8 +84,8 @@ const Item=Form.Item
      //如果用户访问登陆页面，如果信息存在 直接让她去admin页面
      //读取保存的user，如果不存在，直接跳转到登陆界面  
     //const user = JSON.parse( localStorage.getItem('user_key')||'{}')
-    const user = storageutils.getUser()
-    console.log(user);
+    //const user = storageutils.getUser()
+    const user = meoryUtils.user
     if (user._id) {
     //如果用户不存在 自动跳转到login界面     
       //  this.props.history.replace('/login')  在render中不能这么跳转，此方法一般在时间回调函数里面做
