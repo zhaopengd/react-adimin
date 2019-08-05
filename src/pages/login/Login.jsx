@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import { Form, Icon, Input, Button,message} from 'antd';
 import logo from './images/logo.png'
 import './login.less'
+import storageutils from '../../utils/storageutils'
 //引入接口请求函数  ---->发请求
 import {reqLogin} from '../../api'
 import {NavLink,Route,Switch,Redirect} from 'react-router-dom';
-import { stringify } from 'querystring';
 const Item=Form.Item
  class Login extends Component {
 
@@ -37,8 +37,8 @@ const Item=Form.Item
         const user=result.data
         //存储到localStorage中  存储在loaclStorage中的key自定义   值只能是文本字符串
         //所以需要先将数据转化成 JSON格式  然后浏览器自动调用 tostring方法
-        localStorage.setItem('user_key',JSON.stringify(user))
-          
+       // localStorage.setItem('user_key',JSON.stringify(user))
+       storageutils.saveUser(user)
           //跳转到admin 界面
           // <Route path='/' component={Admin}/> 在render外部  无法实现 此方法跳转  所以使用 history
           this.props.history.replace('/')   //登陆成功之后  就不让他回退了
@@ -80,7 +80,8 @@ const Item=Form.Item
  
      //如果用户访问登陆页面，如果信息存在 直接让她去admin页面
      //读取保存的user，如果不存在，直接跳转到登陆界面  
-    const user = JSON.parse( localStorage.getItem('user_key')||'{}')
+    //const user = JSON.parse( localStorage.getItem('user_key')||'{}')
+    const user = storageutils.getUser()
     console.log(user);
     if (user._id) {
     //如果用户不存在 自动跳转到login界面     
@@ -88,12 +89,6 @@ const Item=Form.Item
       return <Redirect to='/'/> //自动跳转到指定的路由路径
    // return <Route path='/login' component={Login}/>   
     } 
-
-
-
-
-
-
 
         //拿到下面创建的form标签的 getFieldDecorator 函数  用于和表单进行双向绑定
         const {getFieldDecorator}=this.props.form

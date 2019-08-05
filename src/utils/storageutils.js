@@ -3,15 +3,33 @@
         读取user 或者删除user
 */
 
-
+/*
+进行local数据存储管理的工具模块
+ */
+import store from 'store'
+const USER_KEY = 'user_key'
 export default {
-    saveUser(user){
+  /*
+  保存user
+   */
+  saveUser (user) {
+    // localStorage.setItem(USER_KEY, JSON.stringify(user))
+    store.set(USER_KEY, user)
+  },
 
-        localStorage.setItem('user_key',JSON.stringify(user))
-    },
-    // 获取用户 需要返回一个user对象 没有的话返回一个空对象。 方面后面读取
-    getUser(){
-        return localStorage.getItem()
-    },
-    removeUser(){}
+  /*
+  读取user
+   */
+  getUser () {
+    // return JSON.parse(localStorage.getItem(USER_KEY) || '{}')
+    return store.get(USER_KEY) || {}
+  },
+
+  /*
+  删除user
+   */
+  removeUser () {
+    // localStorage.removeItem(USER_KEY)
+    store.remove(USER_KEY)
+  }
 }
