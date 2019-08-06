@@ -4,8 +4,12 @@ import { Modal } from 'antd';
 import menuList from '../../config/menuConfig'
 import memoryUtils from '../../utils/memoryUtils'
 import storageutils from '../../utils/storageutils'
+import {formateDate} from '../../utils/dateUtils'
 import './index.less'
 class Header extends Component {
+    state={
+        currentTime:formateDate(Date.now())
+    }
     /* 
      退出登录
     */
@@ -47,9 +51,20 @@ class Header extends Component {
         })
         return title
     }
-    
-    
+    /* 动态显示时间 */
+    componentDidMount(){
+    this.timeID=setInterval(() => {
+            this.setState({
+                currentTime:formateDate(Date.now())
+            })
+        },1000);
+    }
+
+    componentWillUnmount(){
+        clearInterval(this.timeID)
+    }
     render() {
+        const  {currentTime}=this.state
         const user = memoryUtils.user
         //得到当前显示IDEtitle
         const title = this.getTitle()
@@ -62,7 +77,7 @@ class Header extends Component {
                 <div className='header-bottom'>
                     <div className='header-bottom-left'>{title}</div>
                     <div className='header-bottom-right'>
-                        <span>2019-1-1*******</span>
+                        <span>{currentTime}</span>
                         <img src="http://api.map.baidu.com/images/weather/day/duoyun.png" alt=""/>
                         <span>晴</span>
                     </div>
