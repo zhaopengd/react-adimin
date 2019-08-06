@@ -1,8 +1,9 @@
 /* 
-包含应用中 所有请求接口的函数 --->接口请求函数
+包含应用中 所有请求接口的函数 --->接口请求函数 返回的都是promise对象
       在此处封装  谁想发请求就引入 然后调用函数即可。
 */
 import  ajax from './ajax'
+import jsonp from 'jsonp'  // axios不能发送jsonp请求
 
 //const BASE = 'http://localhost:5000'
 const BASE=''
@@ -73,3 +74,23 @@ reqLogin(n,p).then((result)=>{
    // 将res 请求错误时  返回的promise对象为 pending状态 次回调就不会执行了
 },(err)=>{console.log(err.message); //应用响应拦截器，解决 。message
 })  */
+
+/*
+通过jsonp请求获取天气信息
+ */
+export function reqWeather(city) {
+    const url = `http://api.map.baidu.com/telematics/v3/weather?location=${city}&output=json&ak=3p49MVra6urFRGOT9s8UBWr2`
+// 不像axios 自动返回promise对象  这个需要自己返回，因为所有接口请求函数都应该返回接口请求函数。                   
+    return new Promise((resolve, reject) => {//执行器函数：内部执行异步任务的函数 ，成功了调用resolve()，失败调用reject()
+      jsonp(url, {//配置对象
+        param: 'callback'
+      }, (error, response) => {
+        if (!error && response.status == 'success') {
+          const {dayPictureUrl, weather} = response.results[0].weather_data[0]
+          resolve({dayPictureUrl, weather})//图片和文本
+        } else { //失败的 
+          alert('获取天气信息失败')
+        }
+      })
+    })
+  }
