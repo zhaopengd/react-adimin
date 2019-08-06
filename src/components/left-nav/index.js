@@ -102,11 +102,17 @@ getMenuNodes2=(menuList)=>{
     }
     
 
+    componentDidMount(){// 只执行一次 第一次render之后
 
+    }
+    componentWillMount(){//第一次render之前，执行一次
+      // 为了使 left-nav只渲染一次，所以放到这里
+      this. menuNodes= this.getMenuNodes2(menuList)  //异步创建
+    }
 
     render() {
         //保证先存储 openkey  再去读
-        const menuNodes= this.getMenuNodes2(menuList)
+       // const menuNodes= this.getMenuNodes2(menuList)
         //得到当前请求的路由路径 --->动态实现默认选中效果，就是输入那个地址，left-nav中的哪个就被选中
         // location 下面有一个 pathname！！！
         // 由于不是路由组件  所以你读取不到  history location match 三个属性
@@ -131,7 +137,7 @@ getMenuNodes2=(menuList)=>{
         >
         {//通过menuList 生成含有Menu.Item 和 SubMenu  标签的数组 
           
-            menuNodes
+           this. menuNodes
         }
         </Menu>
             </div>
