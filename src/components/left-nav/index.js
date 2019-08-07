@@ -16,7 +16,7 @@ const { SubMenu } = Menu;
 getMenuNodes2=(menuList)=>{
 
      // 请求的路径
-     const path = this.props.location.pathname
+    const path = this.props.location.pathname
     
     return menuList.reduce((pre,item)=>{
         // 可能向 pre 中添加 <Menu.Item>

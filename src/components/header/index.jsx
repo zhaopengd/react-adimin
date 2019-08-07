@@ -7,6 +7,7 @@ import memoryUtils from '../../utils/memoryUtils'
 import storageutils from '../../utils/storageutils'
 import {formateDate} from '../../utils/dateUtils'
 import './index.less'
+import LinkButton from '../link-button';
 class Header extends Component {
     state={
         currentTime:formateDate(Date.now()),
@@ -89,7 +90,8 @@ class Header extends Component {
             <div className='header'>
                 <div className='header-top'>
                     欢迎，{user.username}&nbsp;&nbsp;
-                    <a href="###" onClick={this.logout}>退出</a>
+                    {/*组件的标签体作为标签的children属性传入  props 会存有两个属性，onClick和 childrn  */}
+                    <LinkButton onClick={this.logout}>退出</LinkButton>
                 </div>
                 <div className='header-bottom'>
                     <div className='header-bottom-left'>{title}</div>

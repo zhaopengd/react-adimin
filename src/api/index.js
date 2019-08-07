@@ -87,7 +87,7 @@ export function reqWeather(city) {
       }, (error, response) => {
         if (!error && response.status == 'success') {
           const {dayPictureUrl, weather} = response.results[0].weather_data[0]
-          resolve({dayPictureUrl, weather})//图片和文本
+          resolve({dayPictureUrl, weather})//图片和文本      ？？？？？？
         } else { //失败的 
           alert('获取天气信息失败')
         }
