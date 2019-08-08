@@ -94,3 +94,28 @@ export function reqWeather(city) {
       })
     })
   }
+
+/*  axios 以下三种方式都可以   默认get请求 可以不写 */
+
+  /* 获取分类列表 */
+//export const reqCategorys=()=>ajax.get(BASE + '/manage/category/list')
+
+/* export const reqCategorys=()=>ajax({  //默认不写就是get请求
+  method:'GET' ,
+  url:BASE + '/manage/category/list',
+})
+  */
+ //  获取分类的请求。。
+ export const reqCategorys=()=>ajax(BASE + '/manage/category/list')
+
+//添加分类   添加分类的请求
+export const reqAddCategory=(categoryName)=>ajax.post(BASE + '/manage/category/add',{
+  categoryName
+})
+
+
+//修改分类
+export const reqUpdataCategory=({categoryName,categoryId})=>ajax.post(BASE + '/manage/category/update',{
+  categoryName,
+  categoryId
+})
