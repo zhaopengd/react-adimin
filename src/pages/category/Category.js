@@ -30,7 +30,10 @@ export default class Category extends Component {
     {
       title: '操作',
       width:300,
-      render:()=><LinkButton>修改分类</LinkButton>
+      render:(category)=><LinkButton onClick={()=>{ //声明形参  方便点击的时候知道点击的是谁
+        this.category=category// 保存分类名称 使之随处可见
+        this.setState({showStates:2}) //点击显示
+      }}>修改分类</LinkButton>
     },
   ]
 }
@@ -59,27 +62,41 @@ export default class Category extends Component {
     //进行表单验证  (antd form 组件   与登录差不多)
     this.form.validateFields(async (err,value)=>{  //此处的value 就是子组件输入框的值    属性名为 getFieldDecorator()的第一个参数categoryName  值为value
       if (!err) {
+        this.form.resetFields()//重置输入的数据
         console.log(value);
          //验证通过后，得到输入数据
        //   console.log(this.form.getFieldsValue()); 这样也能获取到数据
          const {categoryName} =value
- 
-          
-         //发送添加分类的请求
-         const result = await  reqAddCategory(categoryName) ///  ????这个请求有用？？？？是像服务器添加分类么？？？？
-         console.log(result);
-         //隐藏添加对话框
-         this.setState({showStates:0})
 
+         const {showStates}=this.state
+         let result    //  在外面声明   外面才能看到
+         if (showStates===1) {//添加
+         //发送添加分类的请求
+         result = await  reqAddCategory(categoryName) ///  ????这个请求有用？？？？是像服务器添加分类么？？？？
+         console.log(result);
+       
+         }else{//修改
+         const categoryId = this.category._id
+         console.log(categoryId);
+         
+         result = await  reqUpdataCategory({categoryId,categoryName}) 
+         console.log(result);
+         
+        }
+        this.form.resetFields() // 重置输入数据(变成了初始值)
+          //隐藏添加对话框
+           this.setState({showStates:0}) 
+           const action = showStates===1?  '添加':'修改'
          // 根据响应结果不同分别处理数据
          if (result.status===0) {
-           //如果添加数据成功  则调用getCategorys 获取分类的函数 更新状态，重新获取分类列表。显示分类到下面列表
-           this.getCategorys()
-           //提示
-           message.success("添加分类成功")
-          } else {
-           message.error('添加分类失败')
-         }
+          //如果添加数据成功  则调用getCategorys 获取分类的函数 更新状态，重新获取分类列表。显示分类到下面列表
+          this.getCategorys()
+          //提示
+          message.success(action+"分类成功")
+         } else {
+          message.error(action+'分类失败')
+        }
+         
       
       }
     })
@@ -89,6 +106,7 @@ export default class Category extends Component {
 
   //点击取消的回调： 只需要让showState状态为0
   handleCancel=()=>{
+    this.form.resetFields()//重置输入的数据
     this.setState({
       showStates:0
     })
@@ -106,7 +124,8 @@ export default class Category extends Component {
   render() {
     //取出状态数据
     const {categorys,loading,showStates}=this.state
-
+    //读取修改分类的名称
+    const category=this.category || {}   //渲染的时候没有点击修改分类 所以渲染的时候可能为空
     // Card的右侧的添加按钮  
     const extra = (
       <Button type='primary' onClick={() => {this.setState({showStates:1}) } } >
@@ -136,8 +155,8 @@ export default class Category extends Component {
           onCancel={this.handleCancel}
         >
          {/* 将子组件传递过来的form对象保存到当前组件上 */}
-         <AddUpdataForm setForm={form=>this.form=form}/>{/* 此组件即可做添加，也可以做修改 */}
-        </Modal>
+         <AddUpdataForm setForm={form=>this.form=form} categoryName={category.name}/>{/* 此组件即可做添加，也可以做修改 */}
+        </Modal>                                                     {/* 此处有坑 */}                  
       </Card>
     )
   }

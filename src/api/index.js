@@ -115,7 +115,9 @@ export const reqAddCategory=(categoryName)=>ajax.post(BASE + '/manage/category/a
 
 
 //修改分类
-export const reqUpdataCategory=({categoryName,categoryId})=>ajax.post(BASE + '/manage/category/update',{
+export const reqUpdataCategory=({categoryId,categoryName})=>ajax.post(BASE + '/manage/category/update',{
+  categoryId,
   categoryName,
-  categoryId
+
+ 
 })

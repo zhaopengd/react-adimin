@@ -7,10 +7,11 @@ import {
 const Item = Form.Item
 /* 添加或者修改分类的Form组件   一个组件做两件事 */
  class AddUpdataForm extends Component {
-   /*   static propTypes = {
-         setForm:propTypes.func.isRequired
+     static propTypes = {
+         setForm:PropTypes.func.isRequired,
+         categoryName: PropTypes.string,
      }
- */
+
     
      componentWillMount() {
          this.props.setForm(this.props.form)
@@ -20,12 +21,13 @@ const Item = Form.Item
     
     render() {
     const {getFieldDecorator}= this.props.form
+    const {categoryName} = this.props
         return (
            <Form>
                <Item>
                {
                 getFieldDecorator('categoryName',{
-                    initialValue:'',
+                    initialValue:categoryName||'',
                     rules:[
                         {required:true,message:'分类名称必须输入'}
                     ]
