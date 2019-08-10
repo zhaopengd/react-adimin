@@ -17,8 +17,6 @@ export default class Category extends Component {
     categorys:[],// 所有分类的数组
     showStates:0      //对话框是否显示 0 代表不显示  1 代表显示添加  2 代表显示修改 //  123456 转化为布尔值都为true。
   }
-
-  
 //初始化table 所有列的描述信息
   initColums=()=>{
     this. columns = [
@@ -37,7 +35,6 @@ export default class Category extends Component {
     },
   ]
 }
-
 /* 异步获取分类列表数据 */
   getCategorys= async ()=>{
    //显示iloading
@@ -103,7 +100,6 @@ export default class Category extends Component {
 
    
   }
-
   //点击取消的回调： 只需要让showState状态为0
   handleCancel=()=>{
     this.form.resetFields()//重置输入的数据
@@ -111,15 +107,12 @@ export default class Category extends Component {
       showStates:0
     })
   }
-  
-
   componentWillMount() {//  不要在生命周期函数中写太多
     this.initColums()
   }
   componentDidMount() {
     this.getCategorys()
   }
-
 
   render() {
     //取出状态数据
