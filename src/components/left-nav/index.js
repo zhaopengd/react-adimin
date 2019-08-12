@@ -38,7 +38,7 @@ getMenuNodes2=(menuList)=>{
            
           const cItem =  item.children.find(cItem=>cItem.key===path)
            if (cItem) {
-                this. openKey =item .key
+                this.openKey =item.key
             }        
 
               pre.push(
@@ -107,7 +107,7 @@ getMenuNodes2=(menuList)=>{
     }
     componentWillMount(){//第一次render之前，执行一次
       // 为了使 left-nav只渲染一次，所以放到这里
-      this. menuNodes= this.getMenuNodes2(menuList)  //异步创建
+      this.menuNodes= this.getMenuNodes2(menuList)  //异步创建
     }
 
     render() {
@@ -137,7 +137,7 @@ getMenuNodes2=(menuList)=>{
         >
         {//通过menuList 生成含有Menu.Item 和 SubMenu  标签的数组 
           
-           this. menuNodes
+           this.menuNodes
         }
         </Menu>
             </div>

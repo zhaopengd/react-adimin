@@ -26,7 +26,7 @@ export default class Category extends Component {
       //render: text => <a href="javascript:;">{text}</a>,  //   给每个对应数据 name 设置成 a 标签
     },
     {
-      title: '操作',
+      title: '操作', 
       width:300,
       render:(category)=><LinkButton onClick={()=>{ //声明形参  方便点击的时候知道点击的是谁
         this.category=category// 保存分类名称 使之随处可见

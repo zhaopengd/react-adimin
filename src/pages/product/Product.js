@@ -4,41 +4,15 @@
 import React, { Component } from 'react'
 import {Card,Select,Input,Button,Icon,Table  } from "antd";
 import LinkButton from '../../components/link-button'
+import {reqProducts}  from '../../api'; 
 const Option = Select.Option
 export default class Product extends Component {
     state={
         loading:false,
+        //数据
         products:[
-            {
-                    "status": 1,
-                    "imgs": [
-                        "image-1559402396338.jpg"
-                    ],
-                    "_id": "5ca9e05db49ef916541160cd",
-                    "name": "联想ThinkPad 翼4809",
-                    "desc": "年度重量级新品，X390、T490全新登场 更加轻薄机身设计9",
-                    "price": 65999,
-                    "pCategoryId": "5ca9d6c0b49ef916541160bb",
-                    "categoryId": "5ca9db9fb49ef916541160cc",
-                    "detail": "<p><span style=\"color: rgb(228,57,60);background-color: rgb(255,255,255);font-size: 12px;\">想你所需，超你所想！精致外观，轻薄便携带光驱，内置正版office杜绝盗版死机，全国联保两年！</span> 222</p>\n<p><span style=\"color: rgb(102,102,102);background-color: rgb(255,255,255);font-size: 16px;\">联想（Lenovo）扬天V110 15.6英寸家用轻薄便携商务办公手提笔记本电脑 定制【E2-9010/4G/128G固态】 2G独显 内置</span></p>\n<p><span style=\"color: rgb(102,102,102);background-color: rgb(255,255,255);font-size: 16px;\">99999</span></p>\n",
-                    "__v": 0
-                },
-                {
-                    "status": 1,
-                    "imgs": [
-                        "image-1559402448049.jpg",
-                        "image-1559402450480.jpg"
-                    ],
-                    "_id": "5ca9e414b49ef916541160ce",
-                    "name": "华硕(ASUS) 飞行堡垒",
-                    "desc": "15.6英寸窄边框游戏笔记本电脑(i7-8750H 8G 256GSSD+1T GTX1050Ti 4G IPS)",
-                    "price": 6799,
-                    "pCategoryId": "5ca9d6c0b49ef916541160bb",
-                    "categoryId": "5ca9db8ab49ef916541160cb",
-                    "detail": "<p><span style=\"color: rgb(102,102,102);background-color: rgb(255,255,255);font-size: 16px;\">华硕(ASUS) 飞行堡垒6 15.6英寸窄边框游戏笔记本电脑(i7-8750H 8G 256GSSD+1T GTX1050Ti 4G IPS)火陨红黑</span>&nbsp;</p>\n<p><span style=\"color: rgb(228,57,60);background-color: rgb(255,255,255);font-size: 12px;\">【4.6-4.7号华硕集体放价，大牌够品质！】1T+256G高速存储组合！超窄边框视野无阻，强劲散热一键启动！</span>&nbsp;</p>\n",
-                    "__v": 0
-                },
-        ], //数据
+        ], 
+        total: 0 ,    //商品的总数量
     }
     initColumns=()=>{//初始化显示
         this.columns=[
@@ -60,6 +34,7 @@ export default class Product extends Component {
         },
         {
             title: '状态',
+            width:100,
             dataIndex: 'status',
             // 状态对应的列  有按钮 和文字 所以用render
             render:(status)=>{
@@ -71,7 +46,7 @@ export default class Product extends Component {
                 }
                 return (
                 <span>
-                  <button>{btnText}</button>
+                  <button>{btnText}</button><br/>
                   <span>{text}</span>
                 </span>  
                 )
@@ -87,14 +62,33 @@ export default class Product extends Component {
             )
         },
         ]
+    }       
+    /* 异步获取指定页码商品列表显示 */
+    getProducts = async (pageNum) => {
+        //发请求获取数据
+        const result = await reqProducts(pageNum,2)
+        console.log(123);
+        
+        //判断数据的准确性
+        if (result.status===0) {
+            const {total,list} = result.data //取出我们需要的数据
+            this.setState({
+                product:list,
+                total:total
+            })
+        }
     }
     
     componentWillMount() {
         this.initColumns()
     }
+    componentDidMount(){
+        //获取第一页显示，请求函数中需要两个参数。
+        this.getProducts(1)
+    }
     
     render() {
-         const {loading,products }= this.state   
+         const {loading,products, total }= this.state   
          const title =(
      <span>   
         <Select style={{ width: 200 }} value='1'>
@@ -123,8 +117,8 @@ export default class Product extends Component {
                 dataSource={products}
                 //loading 图
                 loading={loading}
-                //配置分页
-                pagination={{defaultPageSize: 5, showQuickJumper: true}}  //默认页数  和是否显示跳转
+                //配置分页                                                             //改变页码的时候 获取数据   千万不要加括号。          
+                pagination={{total, defaultPageSize: 2, showQuickJumper: true,onChange:this.getProducts}}  //默认页数  和是否显示跳转
                 />
             </Card>
         )

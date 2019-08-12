@@ -118,6 +118,14 @@ export const reqAddCategory=(categoryName)=>ajax.post(BASE + '/manage/category/a
 export const reqUpdataCategory=({categoryId,categoryName})=>ajax.post(BASE + '/manage/category/update',{
   categoryId,
   categoryName,
+})
 
- 
+/* 
+  获取商品分页列表
+*/
+export const reqProducts =(pageNum,pageSize)=>ajax(BASE+'/manage/product/list',{
+  params:{//看接口文档 包含所有 quqery参数的对象
+    pageNum,
+    pageSize
+  }
 })
