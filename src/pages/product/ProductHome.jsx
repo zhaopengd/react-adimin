@@ -29,9 +29,6 @@ export default class ProductHome extends Component {
         }
     }
     
-
-
-
     initColumns=()=>{//初始化显示
         this.columns=[
             {

@@ -4,9 +4,8 @@
 
 import axios from 'axios'
 import qs from 'qs'
-
 //对所有的post请求 data 的对象进行字符串化  Interceptors 请求拦截器
-
+//后台只能读取 urlencided格式 不能读取json格式
 //添加请求拦截器 让 post请求的请求体的格式转化为 urlencided格式 a:1&b:1形式
 axios.interceptors.request.use(function (config) {
 

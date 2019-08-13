@@ -1,6 +1,8 @@
+
+/*读取local中的user 存储用户登录信息 */
+
 import storageutils from "./storageutils";
-
+const user = storageutils.getUser() //从local中读取user 保存到内存中
 export default {
-    user: storageutils.getUser(), //用来存储登录用户的信息，初始值为local中读取的值
-
+    user
 }

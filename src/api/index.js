@@ -109,7 +109,7 @@ export function reqWeather(city) {
  export const reqCategorys=()=>ajax(BASE + '/manage/category/list')
 
 //添加分类   添加分类的请求
-export const reqAddCategory=(categoryName)=>ajax.post(BASE + '/manage/category/add',{
+export const reqAddCategory=(categoryName)=>ajax.post(BASE + '/manage/category/add',{ //第二个参数是一个对象。
   categoryName
 })
 

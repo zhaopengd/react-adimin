@@ -16,7 +16,7 @@ const Item=Form.Item
         e.preventDefault();
 
         //取出输入的相关数据
-        const form =this.props.form
+       const form =this.props.form
         //getFieldsValue: 获取一组输入控件的值，如不传入参数，则获取全部组件的值
        //getFieldValue : 获取一个输入控件的值
        //  收集输入的数据。
@@ -35,8 +35,9 @@ const Item=Form.Item
           //登陆成功和失败
           if (result.status===0) {
         //将用户信息保存到localStorage中  //此处的data是 api文档中的data  包含用户的所有信息 
-        //获取用户信息
+        //获取用户信息 
         const user=result.data
+        
         //存储到localStorage中  存储在loaclStorage中的key自定义   值只能是文本字符串
         //所以需要先将数据转化成 JSON格式  然后浏览器自动调用 tostring方法
        // localStorage.setItem('user_key',JSON.stringify(user))

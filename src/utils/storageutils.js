@@ -10,11 +10,11 @@ import store from 'store'
 const USER_KEY = 'user_key'
 export default {
   /*
-  保存user
+  保存user   (user就是 请求成功返回的数据)
    */
-  saveUser (user) {
+  saveUser (user) { //API文档里 返回的数据 是JSON格式的。所以进行处理
     // localStorage.setItem(USER_KEY, JSON.stringify(user))
-    store.set(USER_KEY, user)
+    store.set(USER_KEY, user)  //解析出来就是一个对象或数组
   },
 
   /*
