@@ -85,7 +85,7 @@ export function reqWeather(city) {
       jsonp(url, {//配置对象
         param: 'callback'
       }, (error, response) => {
-        if (!error && response.status == 'success') {
+        if (!error && response.status === 'success') {
           const {dayPictureUrl, weather} = response.results[0].weather_data[0]
           resolve({dayPictureUrl, weather})//图片和文本      ？？？？？？
         } else { //失败的 
@@ -129,3 +129,30 @@ export const reqProducts =(pageNum,pageSize)=>ajax(BASE+'/manage/product/list',{
     pageSize
   }
 })
+/* 根据ID/Name搜索产品分页列表 */  //参数很多 所以封装成一个对象，传值的时候必须是一个对象
+export const reqSearchProducts=({
+      pageNum,
+      pageSize,
+      searchName, // 搜索的值
+      searchType   // 搜索的类型  他只能是 productName 或者 productDesc
+    })=>ajax(BASE+'/manage/product/search',{
+  //默认get请求
+  params:{
+    pageNum,
+    pageSize,
+    [searchType]:searchName,  // 无法判断根据名字搜索还是描述搜索，所以用数组接住。
+   //属性名 有多种情况。
+  }
+})
+
+/*对商品进行上架或者下架处理 */
+export const reqUpdateStatus=(productId,status)=>ajax(BASE+'/manage/product/updateStatus',
+  {
+    method:'POST',
+    /* 请求体参数  post 用data get 用params */
+    data:{
+      productId,
+      status
+    }
+})
+

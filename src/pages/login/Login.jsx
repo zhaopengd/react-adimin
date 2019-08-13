@@ -95,7 +95,7 @@ const Item=Form.Item
 
         //拿到下面创建的form标签的 getFieldDecorator 函数  用于和表单进行双向绑定
         const {getFieldDecorator}=this.props.form
-
+//getFieldDecorator  只有他包裹的input 才能使用 里面的方法   gitfiledValue
         return (
             <div className='login'>
                <div className='login-header'>
@@ -177,7 +177,6 @@ const Item=Form.Item
     方法是一个特殊的属性  方法的属性值是一个函数 
 
 */
-
 const WrapperFrom =  Form.create()(Login)
 
 export default WrapperFrom  // 生成标签   <Form(Login)
