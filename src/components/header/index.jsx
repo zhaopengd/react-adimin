@@ -30,14 +30,11 @@ class Header extends Component {
               /* 此方法常用在回调函数中，而return Redict 常用在render中 */
               this.props.history.replace('/login')  //此方法必须使用在路由组件中  
               // console.log(this)  此时this为undefined 所以读取不到props
-
             },
             onCancel() {
               console.log('Cancel');
             },
-          })
-
-        
+          })  
     }
 /* 根据当前请求的path得到对应的title */
     getTitle=()=>{
@@ -66,7 +63,6 @@ class Header extends Component {
       })
 
     }
-    
     /* 动态显示时间 */
     componentDidMount(){
     this.timeID=setInterval(() => {
@@ -77,7 +73,6 @@ class Header extends Component {
         //发送异步jsonp请求 获取天气信息
         this.getWeather()
     }
-
     componentWillUnmount(){
         clearInterval(this.timeID)
     }

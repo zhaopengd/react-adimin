@@ -107,7 +107,7 @@ getMenuNodes2=(menuList)=>{
     }
     componentWillMount(){//第一次render之前，执行一次
       // 为了使 left-nav只渲染一次，所以放到这里
-      this.menuNodes= this.getMenuNodes2(menuList)  //异步创建
+      this.menuNodes= this.getMenuNodes2(menuList)  //同步创建
     }
 
     render() {
