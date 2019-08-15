@@ -142,7 +142,7 @@ export default class Category extends Component {
           loading={loading}
           //配置分页
           pagination={{defaultPageSize: 5, showQuickJumper: true}}  //默认页数  和是否显示跳转
-        />
+        />  
          <Modal
           title={showStates===1? '添加分类':'修改分类'}
           //显示隐藏
