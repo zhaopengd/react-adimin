@@ -21,7 +21,7 @@ const Item = Form.Item
     
     render() {
     const {getFieldDecorator}= this.props.form
-    const {categoryName} = this.props
+    const {categoryName} = this.props// Category组件中 传过来的 category.name 就是数据中的 看api文档
         return (
            <Form>
                <Item>

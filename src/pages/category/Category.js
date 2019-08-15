@@ -27,10 +27,10 @@ export default class Category extends Component {
     },
     {
       title: '操作', 
-      width:300,
+      width:300,										/* 形参名字随便起  回调的形参赋值  不是你控制的 */
       render:(category)=><LinkButton onClick={()=>{ //声明形参  方便点击的时候知道点击的是谁
         this.category=category// 保存分类名称 使之随处可见
-        this.setState({showStates:2}) //点击显示
+        this.setState({showStates:2}) //点击显示  category： 就是渲染时候没有指定 dataIndex， 那么直接把数据对象给你
       }}>修改分类</LinkButton>
     },
   ]
@@ -101,8 +101,8 @@ export default class Category extends Component {
    
   }
   //点击取消的回调： 只需要让showState状态为0
-  handleCancel=()=>{
-    this.form.resetFields()//重置输入的数据
+  handleCancel=()=>{					//重置是指变成初始值
+    this.form.resetFields()//重置输入的数据！！！！取消修改  就不需要输入框的值了
     this.setState({
       showStates:0
     })
@@ -118,7 +118,7 @@ export default class Category extends Component {
     //取出状态数据
     const {categorys,loading,showStates}=this.state
     //读取修改分类的名称
-    const category=this.category || {}   //渲染的时候没有点击修改分类 所以渲染的时候可能为空
+    const category=this.category || {}   //渲染的时候没有点击修改分类 所以渲染的时候可能为空避免报错
     // Card的右侧的添加按钮  
     const extra = (
       <Button type='primary' onClick={() => {

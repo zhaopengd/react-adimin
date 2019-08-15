@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import {Switch, Route, Redirect} from 'react-router-dom'
-
 import ProductHome from './ProductHome'
+import ProductAddUpdate from './ProductAddUpdate'
+import ProductDetail from './ProductDetail'
 
 /* 父组件引入样式 可以控制子组件样式*/
 import './product.less'
@@ -13,8 +14,12 @@ export default class Product extends Component {
   render() {
     return (
       <Switch>
-        <Route path='/product' component={ProductHome} exact/> {/*路径完全匹配*/}
-        <Redirect to='/product'/>
+         <Switch>
+        <Route path="/product" exact component={ProductHome}/>
+        <Route path="/product/addupdate" component={ProductAddUpdate}/>
+        <Route path="/product/detail/:id" component={ProductDetail}/>
+        <Redirect to="/product" />
+      </Switch>
       </Switch>
     )
   }

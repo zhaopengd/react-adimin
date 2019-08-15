@@ -70,10 +70,17 @@ export default class ProductHome extends Component {
         },
         {
             title: '操作',
-            render:(product)=>(  // ???
+            render:(product)=>(  // 此处的 product 和category同理   
                 <span>
-                    <LinkButton onClick={()=>this.props.history.push('/product/detail')}>详情</LinkButton>
-                    <LinkButton>修改</LinkButton>
+                    <LinkButton
+						onClick={()=>{						 
+						this.props.history.push('/product/detail',product)
+					}}
+					>
+						详情
+					</LinkButton>
+                   
+				 <LinkButton>修改</LinkButton>
                 </span>
             )
         },
