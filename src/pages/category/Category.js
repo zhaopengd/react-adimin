@@ -121,7 +121,10 @@ export default class Category extends Component {
     const category=this.category || {}   //渲染的时候没有点击修改分类 所以渲染的时候可能为空
     // Card的右侧的添加按钮  
     const extra = (
-      <Button type='primary' onClick={() => {this.setState({showStates:1}) } } >
+      <Button type='primary' onClick={() => {
+        this.category=null//或者空对象解决点击修改之后，再点添加 有值得问题
+        this.setState({showStates:1}) 
+        } } >
         <Icon type='plus'/>
         添加
       </Button>

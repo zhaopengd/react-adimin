@@ -128,7 +128,7 @@ getMenuNodes2=(menuList)=>{
 
             <Menu
            // defaultSelectedKeys={['/home']}  不能写死 要不然输入地址 不会被选中
-            defaultSelectedKeys={[selectKey]}
+           selectedKeys={[selectKey]}
             
             //默认打开的menu   也不能写死 和上面的selectKey不同，
             defaultOpenKeys={[this.openKey]} 

@@ -25,7 +25,8 @@ export default class ProductHome extends Component {
         const result= await reqUpdateStatus(productId,status)
         if (result.status===0) {
             message.success('更新商品状态成功')
-            this.getProducts()
+            //获取当前页显示 因为你下面写的1
+            this.getProducts(this.pageNum)
         }
     }
     
@@ -71,7 +72,7 @@ export default class ProductHome extends Component {
             title: '操作',
             render:(product)=>(  // ???
                 <span>
-                    <LinkButton>详情</LinkButton>
+                    <LinkButton onClick={()=>this.props.history.push('/product/detail')}>详情</LinkButton>
                     <LinkButton>修改</LinkButton>
                 </span>
             )
@@ -80,20 +81,26 @@ export default class ProductHome extends Component {
     }       
     /* 异步获取指定页码商品列表显示 */  
     getProducts = async (pageNum) => {
+        //保存当前页码(为了更新状态时能够看见)
+        this.pageNum=pageNum
         let result 
         const {searchName,searchType}=this.state
         /* 点击搜索按钮的时候，显示当前名称的页面 */
         if (!searchName) {
              //发请求获取数据  两种请求的返回结果是一样的  所以写在一起
               result = await reqProducts(pageNum,PAGE_SIZE)
+              console.log(result.data.list);
+              
         }else{
              result = await reqSearchProducts({pageNum,pageSize:PAGE_SIZE,searchName,searchType})
         }
         //判断数据的准确性
         if (result.status===0) {
             const {total,list} = result.data //取出我们需要的数据
+            console.log(list);
+            
             this.setState({
-                product:list,
+                products:list,
                 total:total
             })
         }
@@ -126,7 +133,7 @@ export default class ProductHome extends Component {
          onChange={event=>this.setState({searchName:event.target.value})}  // 看input组件文档
          />
         <Button
-           onClick={()=>this.getProducts(1)}
+           onClick={()=>this.getProducts(1)} // 点击搜索之后 你不就应该显示第一页
             type='primary'
         > 
             搜索</Button>
@@ -142,7 +149,6 @@ export default class ProductHome extends Component {
             <Card title={title} extra={extra}>
                 <Table
                 rowKey='_id'
-
                 bordered    //bordered={true}  属性值为true 的简写方式
                 //纵列
                 columns={this.columns}
@@ -151,7 +157,13 @@ export default class ProductHome extends Component {
                 //loading 图
                 loading={loading}
                 //配置分页                                                             //改变页码的时候 获取数据   千万不要加括号。          
-                pagination={{total, defaultPageSize: PAGE_SIZE, showQuickJumper: true,onChange:this.getProducts}}  //默认页数  和是否显示跳转
+                pagination={{
+                    total, 
+                    defaultPageSize: PAGE_SIZE,
+                    showQuickJumper: true,
+                    onChange:this.getProducts,
+                    current:this.pageNum//当前显示页码
+                    }}  //默认页数  和是否显示跳转
                 />
             </Card>
         )
