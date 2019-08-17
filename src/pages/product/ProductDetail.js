@@ -8,7 +8,7 @@ import {
 import LinkButton from '../../components/link-button'
 import memoryUtils from '../../utils/memoryUtils'
 import { BASE_IMG } from '../../utils/Constants'
-import {reqCategory, reqProduct} from '../../api'
+import {reqCategorys, reqProducts} from '../../api'
 
 const Item = List.Item
 
@@ -23,7 +23,7 @@ export default class ProductDetail extends Component {
   }
 
   getCategory = async (categoryId) => {
-    const result = await reqCategory(categoryId)
+    const result = await reqCategorys(categoryId)
     if (result.status===0) {
       const categoryName = result.data.name
       this.setState({ categoryName })
@@ -36,7 +36,7 @@ export default class ProductDetail extends Component {
       this.getCategory(product.categoryId)
     } else { // 如果当前product状态没有数据, 根据id参数中请求获取商品并更新
       const id = this.props.match.params.id
-      const result = await reqProduct(id)
+      const result = await reqProducts(id)
       if (result.status === 0) {
         product = result.data
         this.setState({
@@ -89,7 +89,6 @@ export default class ProductDetail extends Component {
           </Item>
           <Item>
             <span className="detail-left">商品详情:</span>
-            {/* 返回的数据是标签，react提供的方法 */}
             <div dangerouslySetInnerHTML={{ __html: product.detail}}></div>
           </Item>
         </List>
