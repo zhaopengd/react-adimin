@@ -1,11 +1,27 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
+import {Button, message} from 'antd'
+import {NavLink,Route,Switch,Redirect} from 'react-router-dom';
+import Login from './pages/login/Login'
+import Admin from './pages/admin/Admin'
+/*
+应用根组件
+ */
+class App extends Component {
 
-export default class App extends Component {
-    render() {
-        return (
-            <div>
-                
-            </div>
-        )
-    }
+  handleClick = () => {
+    message.success('成功啦...');
+  }
+
+  render() {
+    return (
+   
+      <Switch>
+        <Route path='/login' component={Login}/>
+        <Route path='/' component={Admin}/>
+      </Switch>
+     
+    )
+  }
 }
+
+export default App

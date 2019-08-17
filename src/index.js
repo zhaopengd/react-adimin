@@ -1,6 +1,15 @@
-import React from 'react'
-import ReactDOm from 'react-dom'
-import App from './App'
+/* 入口js */
 
-ReactDom.render(<App/>,document.getElementById('root'))
-                  
+
+import React from 'react'
+import ReactDOM from 'react-dom'
+import App from './App';
+import {BrowserRouter,HashRouter} from 'react-router-dom';
+import  './api'
+
+ReactDOM.render(
+<BrowserRouter>
+<App/>
+</BrowserRouter>
+,document.getElementById('root'))
+									
